@@ -12,18 +12,23 @@
                       version          : 'v19.0'
                     });
  
-            FB.login(function(response) {
-                      if (response.authResponse) {
-                           console.log('Welcome!  Fetching your information.... ');
-                           FB.api('/me', {fields: 'name, email'}, function(response) {
-                               document.getElementById("profile").innerHTML = "Good to see you, " + response.name + ". i see your email address is " + response.email
-                           });
-                      } else { 
-                           console.log('User cancelled login or did not fully authorize.'); }
-            });
+            // FB.login(function(response) {
+            //           if (response.authResponse) {
+            //                console.log('Welcome!  Fetching your information.... ');
+            //                FB.api('/me', {fields: 'name, email'}, function(response) {
+            //                    document.getElementById("profile").innerHTML = "Good to see you, " + response.name + ". i see your email address is " + response.email
+            //                });
+            //           } else { 
+            //                console.log('User cancelled login or did not fully authorize.'); }
+            // });
 
             var callback = function(response) {
               console.log(response);
+              if (response.status === 'connected') {
+                document.querySelector('#authBtn').value = 'Logout';
+              } else {
+                document.querySelector('#authBtn').value = 'Login';
+              }
             }
             FB.getLoginStatus(callback);
         };
@@ -42,6 +47,22 @@
   </script>
 </head>
 <body>
+  <input type="button" id="authBtn" value="checking..." onclick="
+    if (this.value === 'Login') {
+      // now logout-state
+      FB.login(function(res) {
+        console.log('login => ', res);
+        checkLoginStatus(res);
+      });
+    } else {
+      // now login-state
+      FB.logout(function(res) {
+        console.log('logout => ', res);
+        checkLoginStatus(res);
+      });
+    }
+  ">
+  <p>Hello</p>
   <h1><a href="index.html">WEB</a></h1>
   <ol>
     <li><a href="1.html">HTML</a></li>
