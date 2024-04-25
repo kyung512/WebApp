@@ -4,6 +4,14 @@
   <title>App_test</title>
   <meta charset="utf-8">
   <script>
+    var checkLoginStatus = function (response) {
+      console.log(response);
+      if (response.status === 'connected') {
+        document.querySelector('#authBtn').value = 'Logout';
+      } else {
+        document.querySelector('#authBtn').value = 'Login';
+      }
+    }
     window.fbAsyncInit = function() {
             <!-- Initialize the SDK with your app and the Graph API version for your app -->
             FB.init({
@@ -22,15 +30,8 @@
             //                console.log('User cancelled login or did not fully authorize.'); }
             // });
 
-            var callback = function(response) {
-              console.log(response);
-              if (response.status === 'connected') {
-                document.querySelector('#authBtn').value = 'Logout';
-              } else {
-                document.querySelector('#authBtn').value = 'Login';
-              }
-            }
-            FB.getLoginStatus(callback);
+
+            FB.getLoginStatus(checkLoginStatus);
         };
 
 
