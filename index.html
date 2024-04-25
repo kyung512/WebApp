@@ -3,6 +3,43 @@
 <head>
   <title>App_test</title>
   <meta charset="utf-8">
+  <script>
+    window.fbAsyncInit = function() {
+            <!-- Initialize the SDK with your app and the Graph API version for your app -->
+            FB.init({
+                      appId            : '451769217328579',
+                      xfbml            : true,
+                      version          : 'v19.0'
+                    });
+ 
+            FB.login(function(response) {
+                      if (response.authResponse) {
+                           console.log('Welcome!  Fetching your information.... ');
+                           FB.api('/me', {fields: 'name, email'}, function(response) {
+                               document.getElementById("profile").innerHTML = "Good to see you, " + response.name + ". i see your email address is " + response.email
+                           });
+                      } else { 
+                           console.log('User cancelled login or did not fully authorize.'); }
+            });
+
+            var callback = function(response) {
+              console.log(response);
+            }
+            FB.getLoginStatus(callback);
+        };
+
+
+  //  Add the Facebook SDK for Javascript 
+  (function(d, s, id){
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) {return;}
+                        js = d.createElement(s); js.id = id;
+                        js.src = "https://connect.facebook.net/en_US/sdk.js";
+                        fjs.parentNode.insertBefore(js, fjs);
+                      }(document, 'script', 'facebook-jssdk')
+  );
+
+  </script>
 </head>
 <body>
   <h1><a href="index.html">WEB</a></h1>
