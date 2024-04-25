@@ -8,6 +8,9 @@
       console.log(response);
       if (response.status === 'connected') {
         document.querySelector('#authBtn').value = 'Logout';
+        FB.api('/me', function(resp) {
+          document.querySelector('#name').innerHTML = resp.name;
+        });
       } else {
         document.querySelector('#authBtn').value = 'Login';
       }
@@ -63,7 +66,7 @@
       });
     }
   ">
-  <p>Hello</p>
+  <span id="name"></span>
   <h1><a href="index.html">WEB</a></h1>
   <ol>
     <li><a href="1.html">HTML</a></li>
